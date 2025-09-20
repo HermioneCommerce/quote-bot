@@ -6,4 +6,4 @@
 .env.keys
 .env.local
 .env.*.local
-.next
+.Next
