@@ -5,10 +5,11 @@ export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   })
-
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const pubKey = process.env.NEXT_PUBLIC_SUPABASE_PUB_KEY || "";
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    url,
+    pubKey,
     {
       cookies: {
         getAll() {
