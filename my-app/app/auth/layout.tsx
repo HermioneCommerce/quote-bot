@@ -6,7 +6,7 @@ export default function AuthLayout({
     children: React.ReactNode
 }>) {
     return (
-        <Grid columns="1" justify="center" align="center" style={{ height: '100vh', padding: '20px' }} rows="1fr, min-content" gapY="1" gapX="4">
+        <Grid columns="1" justify="start" align={{xs: 'start', md: 'center'}} style={{ height: '100vh', padding: '20px' }} gapY={{xs: '10', md: '0'}} gapX="4" rows={{ xs: '1fr 15fr',md: 'auto' }}>
             { children }
         </Grid>
     )

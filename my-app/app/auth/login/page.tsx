@@ -1,14 +1,14 @@
 import Login from "./Login";
+import { Text, Heading } from '@radix-ui/themes';
 
 /*
     Placeholder for now
 */
 export default function LoginPage() {
     return ( 
-    <div>
-        <h3>Login Page</h3>
-        <p>This is a placeholder for the login page.</p>
+    <>
+        <Heading align="center" size="8">Login Page</Heading>
         <Login />
-    </div>
+    </>
     )
 }

@@ -1,34 +1,44 @@
 'use client'
 
-import { Button, Card, Flex, TextField, Text } from "@radix-ui/themes";
+import { createClient } from "@/utils/supabase/client";
+import { Button, Card, Flex, TextField, Text, Link } from "@radix-ui/themes";
 import { Form } from "radix-ui";
 import React from "react";
 
+
+
 export default function SignUp() {
-    const handleSubmit = (e: React.FormEvent) => {
+    const signUpNewUser = async (e: React.FormEvent) => {
         if (!(e.currentTarget instanceof HTMLFormElement)) return;
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         console.log(formData);
         const email = formData.get("email");
         const password = formData.get("password");
-        const confirmPassword = formData.get("confirmPassword");
-        if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
-        }
-        console.log({ email, password, confirmPassword });
+        console.log(process.env);
+        const supabase = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+        );
+        
+        const { data, error } = await supabase.auth.signUp({
+            email: email as string,
+            password: password as string,
+            options: {
+                emailRedirectTo: `${window.location.origin}/auth/confirm`
+            }
+        });
     }
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
             <Text >This is a placeholder for the sign-up page.</Text>
             <Card style={{ padding: '20px', maxWidth: '60%', minWidth: '400px' }} variant="surface">
-                <Form.Root style={{ width: '100%' }} onSubmit={handleSubmit}>
+                <Form.Root style={{ width: '100%' }} onSubmit={signUpNewUser}>
                     <Flex direction="column" gap="4" align="center" justify={"center"}>
                         <Form.Field name="email" style={{ width: '100%' }}>
                             <Form.Label>Email</Form.Label>
                             <Form.Control asChild>
-                                <TextField.Root size="3" placeholder="Enter your email" type="email"/>
+                                <TextField.Root size="3" placeholder="Enter your email" type="email" />
                             </Form.Control>
                             <Form.Message match="valueMissing">Please enter your email</Form.Message>
                             <Form.Message match={(value) => !/\S+@\S+\.\S+/.test(value)}>Please enter a valid email</Form.Message>
@@ -36,19 +46,26 @@ export default function SignUp() {
                         <Form.Field name="password" style={{ width: '100%' }}>
                             <Form.Label>Password</Form.Label>
                             <Form.Control asChild>
-                                <TextField.Root size="3" placeholder="Enter your password" type="password"/>
+                                <TextField.Root size="3" placeholder="Enter your password" type="password" />
                             </Form.Control>
                             <Form.Message match="valueMissing">Please enter your password</Form.Message>
                         </Form.Field>
                         <Form.Field name="confirmPassword" style={{ width: '100%' }}>
                             <Form.Label>Confirm Password</Form.Label>
                             <Form.Control asChild>
-                                <TextField.Root size="3" placeholder="Confirm your password" type="password"/>
+                                <TextField.Root size="3" placeholder="Confirm your password" type="password" />
                             </Form.Control>
                             <Form.Message match="valueMissing">Please confirm your password</Form.Message>
                             <Form.Message match={(value, formData) => value !== formData.get("password")}>Passwords do not match</Form.Message>
                         </Form.Field>
-                        <Button type="submit" variant="ghost" size="3" style={{ alignSelf: "center" }}>Sign Up</Button>
+
+                        <Form.FormSubmit asChild>
+                            <Button type="submit" size="3" style={{ width: '45%' }}>Sign Up</Button>
+                        </Form.FormSubmit>
+
+                        <Link href="/auth/login" style={{ textAlign: 'center' }} highContrast>
+                            <Text align="center">Already have an account?<br />Log In</Text>
+                        </Link>
                     </Flex>
                 </Form.Root>
             </Card>
