@@ -1,14 +1,16 @@
 import { createServerClient } from '@supabase/ssr'
+import { SupabaseClient } from '@supabase/supabase-js';
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request,
   })
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+  const url: string = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const pubKey: string = process.env.NEXT_PUBLIC_SUPABASE_PUB_KEY || "";
+  const supabase: SupabaseClient = createServerClient(
+    url,
+    pubKey,
     {
       cookies: {
         getAll() {
@@ -39,13 +41,13 @@ export async function updateSession(request: NextRequest) {
 
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
     !request.nextUrl.pathname.startsWith('/auth') &&
-    !request.nextUrl.pathname.startsWith('/error')
+    !request.nextUrl.pathname.startsWith('/error') &&
+    !request.nextUrl.pathname.startsWith('/api/auth') 
   ) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone()
-    url.pathname = '/login'
+    url.pathname = '/auth/login'
     return NextResponse.redirect(url)
   }
 
