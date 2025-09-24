@@ -1,12 +1,40 @@
 'use client'
 import { Box, Button, Card, Flex, Link, Text, TextField } from "@radix-ui/themes";
 import { Form } from "radix-ui";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
+
 export default function Login() {
-    const handleLogin = (e: React.FormEvent) => {
+    const router = useRouter();
+
+    const handleLogin = async (e: React.FormEvent) => {
         if (!(e.currentTarget instanceof HTMLFormElement)) return;
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        console.log(formData);
+
+        const email = formData.get("email") as string;
+        const password = formData.get("password") as string;
+
+        const supabase = createClient();
+
+        console.log('Attempting login with:', { email, password: password ? 'present' : 'missing' });
+
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+
+        console.log('Login response:', { data, error });
+
+        if (error) {
+            console.error('Login error:', error);
+            return;
+        }
+
+        if (data.user) {
+            console.log('Login successful, redirecting...');
+            router.push('/');
+        }
     }
     return (<>
         <Box width="66%" style={{ justifySelf: 'center', justifyItems: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '20px' }}>

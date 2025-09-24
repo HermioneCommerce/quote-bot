@@ -1,5 +1,5 @@
 import { Card, Heading, Text } from "@radix-ui/themes";
-import SignUp from "./SignUp";
+import SignUp from "./signUp";
 import { createClient } from "@/utils/supabase/server";
 
 /* Placeholder for now */

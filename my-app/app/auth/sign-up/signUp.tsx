@@ -16,17 +16,11 @@ export default function SignUp() {
         const email = formData.get("email");
         const password = formData.get("password");
         console.log(process.env);
-        const supabase = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-        );
+        const supabase = createClient();
         
         const { data, error } = await supabase.auth.signUp({
             email: email as string,
-            password: password as string,
-            options: {
-                emailRedirectTo: `${window.location.origin}/auth/confirm`
-            }
+            password: password as string
         });
     }
     return (
