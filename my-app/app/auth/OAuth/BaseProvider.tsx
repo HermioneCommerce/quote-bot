@@ -3,9 +3,10 @@ import React from "react";
 import {Box} from "@radix-ui/themes";
 import {createClient} from "@/utils/supabase/client";
 import {useRouter} from "next/navigation";
+import {Provider} from "@supabase/auth-js";
 
 type BaseProviderProps = {
-    providerName: "google" | "github";
+    providerName: Provider;
     children: React.ReactNode;
 }
 export default function BaseProvider(props: BaseProviderProps) {
@@ -28,7 +29,7 @@ export default function BaseProvider(props: BaseProviderProps) {
         }
     }
     return (
-        <Box onClick={handleSignIn}>
+        <Box onClick={handleSignIn} className={"oath-btn"} maxWidth={"35px"} width={"25px"}>
             {props.children}
         </Box>
     )

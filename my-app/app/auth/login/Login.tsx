@@ -42,7 +42,7 @@ export default function Login() {
             gap: '20px'
         }}>
             <Text style={{textAlign: 'center'}} size="6">This is a placeholder for the login page.</Text>
-            <Card style={{padding: '20px', maxWidth: '60%', minWidth: '400px'}} variant="surface">
+            <Card style={{padding: '20px', maxWidth: '60%', minWidth: '400px', height: 'max-content'}} variant="surface">
                 <Flex gap={"25px"} direction={"column"} flexGrow={"1"}>
                     <Form.Root style={{width: '100%'}} onSubmit={handleLogin}>
                         <Flex direction="column" gap="4" align="center" justify={"center"}>
