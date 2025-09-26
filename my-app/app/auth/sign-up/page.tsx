@@ -1,15 +1,10 @@
-import { Card, Heading, Text } from "@radix-ui/themes";
-import SignUp from "./signUp";
-import { createClient } from "@/utils/supabase/server";
+import {Heading} from "@radix-ui/themes";
+import SignUp from "./SignUp";
 
 /* Placeholder for now */
 export default function SignUpPage() {
-    const supabase = createClient()
-    console.log(process.env)
-    return (
-    <>
+    return (<>
         <Heading align="center" weight="medium" style={{ flexBasis: "start"}}>Sign Up Page</Heading>
         <SignUp />
-    </>
-    )
+    </>)
 }
