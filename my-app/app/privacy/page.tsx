@@ -1,4 +1,4 @@
-import {Box, Card, Flex, Grid, Heading, Link, Section, Text} from "@radix-ui/themes";
+import {Box, Flex, Grid, Heading, Link, Section, Text} from "@radix-ui/themes";
 
 
 export default function PrivacyPage() {
@@ -17,14 +17,14 @@ export default function PrivacyPage() {
                             QuoteBot respects your privacy. We only collect limited information needed to let you sign in and use our service.
                         </Text>
                         <Text align="left" style={{ marginBottom: "2rem" }} size={"5"} as={"p"}>
-                            When you log in with an OAuth provider (Google or LinkedIn), we receive your email address
+                            When you log in with an OAuth provider (Google or LinkedIn), we receive your email address<br />
                             and, in some cases, your name. This info is stored securely and used solely for account management.
                         </Text>
                         <Text align="left" size={"5"} as={"p"}>
-                            We do not share or sell your information, nor use it for advertising.
+                            We do not share or sell your information, nor use it for advertising.<br />
                             To delete your account or ask questions, contact us at
-                            <Link href={"mailto:email@muaazbhyat.co.za"}>email@muaazbhyat.co.za</Link>
-                            or <Link href={"mailto:ayaan@devson.co.za"}>ayaan@devson.co.za</Link>.
+                            &#20;<Link href={"mailto:email@muaazbhyat.co.za"}>email@muaazbhyat.co.za</Link> or
+                            &#20;<Link href={"mailto:ayaan@devson.co.za"}>ayaan@devson.co.za</Link>.
                         </Text>
                     </Box>
                 </Flex>
