@@ -29,7 +29,7 @@ export default function BaseProvider(props: BaseProviderProps) {
         }
     }
     return (
-        <Box onClick={handleSignIn} className={"oath-btn"} maxWidth={"35px"} width={"25px"}>
+        <Box onClick={handleSignIn} className={"oauth-btn"} maxWidth={"35px"} width={"25px"}>
             {props.children}
         </Box>
     )
