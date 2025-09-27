@@ -1,0 +1,5 @@
+.oauth-btn:hover {
+    cursor: pointer !important;
+    color: var(--accent-10);
+    width: 30px;
+}

@@ -1,4 +1,4 @@
-import { Flex, Grid } from "@radix-ui/themes"
+import {Grid} from "@radix-ui/themes"
 
 export default function AuthLayout({
     children

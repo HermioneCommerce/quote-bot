@@ -1,36 +1,32 @@
 'use client'
+
+import {createClient} from "@/utils/supabase/client";
 import {Box, Button, Card, Flex, Link, Text, TextField} from "@radix-ui/themes";
 import {Form} from "radix-ui";
-import {createClient} from "@/utils/supabase/client";
-import {useRouter} from "next/navigation";
+import React from "react";
 import OAuthComponent from "@/app/auth/OAuth/OAuthComponent";
 
-export default function Login() {
-    const router = useRouter();
-    const handleLogin = async (e: React.FormEvent) => {
+
+export default function SignUp() {
+    const signUpNewUser = async (e: React.FormEvent) => {
         if (!(e.currentTarget instanceof HTMLFormElement)) return;
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
 
-        const email = formData.get("email") as string;
-        const password = formData.get("password") as string;
-
-        const supabase = createClient();
-
-        const {data, error} = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
-
-        if (error) {
-            console.error('Login error:', error);
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const confirmPassword = formData.get("confirmPassword");
+        if (password !== confirmPassword) {
+            alert("Passwords don't match");
             return;
         }
+        const supabase = createClient();
+        const {error} = await supabase.auth.signUp({
+            email: email as string,
+            password: password as string
+        });
 
-        if (data.user) {
-            console.log('Login successful, redirecting...');
-            router.push('/');
-        }
+        if (error) alert("Something went wrong");
     }
     return (<>
         <Box width="66%" style={{
@@ -41,10 +37,10 @@ export default function Login() {
             flexDirection: 'column',
             gap: '20px'
         }}>
-            <Text style={{textAlign: 'center'}} size="6">This is a placeholder for the login page.</Text>
-            <Card style={{padding: '20px', maxWidth: '60%', minWidth: '400px', height: 'max-content'}} variant="surface">
-                <Flex gap={"25px"} direction={"column"} flexGrow={"1"}>
-                    <Form.Root style={{width: '100%'}} onSubmit={handleLogin}>
+            <Text>This is a placeholder for the sign-up page.</Text>
+            <Card style={{padding: '20px', maxWidth: '60%', minWidth: '400px'}} variant="surface">
+                <Flex direction={"column"} gap="20px">
+                    <Form.Root style={{width: '100%'}} onSubmit={signUpNewUser}>
                         <Flex direction="column" gap="4" align="center" justify={"center"}>
                             <Form.Field name="email" style={{width: '100%'}}>
                                 <Form.Label>Email</Form.Label>
@@ -52,10 +48,8 @@ export default function Login() {
                                     <TextField.Root size="3" placeholder="Enter your email" type="email" required/>
                                 </Form.Control>
                                 <Form.Message match="valueMissing">Please enter your email</Form.Message>
-                                <Form.Message match="typeMismatch">Please enter a valid
-                                    email</Form.Message>
+                                <Form.Message match="typeMismatch">Please enter a valid email</Form.Message>
                             </Form.Field>
-
                             <Form.Field name="password" style={{width: '100%'}}>
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control asChild>
@@ -63,17 +57,21 @@ export default function Login() {
                                 </Form.Control>
                                 <Form.Message match="valueMissing">Please enter your password</Form.Message>
                             </Form.Field>
-
+                            <Form.Field name="confirmPassword" style={{width: '100%'}}>
+                                <Form.Label>Confirm Password</Form.Label>
+                                <Form.Control asChild>
+                                    <TextField.Root size="3" placeholder="Confirm your password" type="password" required/>
+                                </Form.Control>
+                                <Form.Message match="valueMissing">Please confirm your password</Form.Message>
+                            </Form.Field>
                             <Form.FormSubmit asChild>
-                                <Button type="submit" size="3" style={{width: '45%'}}>Log In</Button>
+                                <Button type="submit" size="3" style={{width: '45%'}}>Sign Up</Button>
                             </Form.FormSubmit>
                         </Flex>
                     </Form.Root>
-
-                    <OAuthComponent />
-
-                    <Link href="/auth/sign-up" style={{textAlign: 'center'}} highContrast>
-                        <Text align="center">Need an account?<br/>Sign Up</Text>
+                    <OAuthComponent/>
+                    <Link href="/auth/login" style={{textAlign: 'center'}} highContrast>
+                        <Text align="center">Already have an account?<br/>Log In</Text>
                     </Link>
                 </Flex>
             </Card>
