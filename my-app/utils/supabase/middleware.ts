@@ -43,7 +43,6 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-    console.log(user)
   if (
     !user &&
     !noAuthRoutes.some((path) => request.nextUrl.pathname.startsWith(path))

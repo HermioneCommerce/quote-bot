@@ -6,7 +6,6 @@ export default function Login() {
         if (!(e.currentTarget instanceof HTMLFormElement)) return;
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        console.log(formData);
     }
     return (<>
         <Box width="66%" style={{ justifySelf: 'center', justifyItems: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column', gap: '20px' }}>

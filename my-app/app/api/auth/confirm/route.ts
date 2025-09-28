@@ -12,7 +12,6 @@ export async function GET(request: NextRequest) {
         return
     }
     const next = searchParams.get('next') ?? '/'
-    console.log({ token_hash, type, next })
     if (token_hash && type) {
         const supabase = await createClient()
 

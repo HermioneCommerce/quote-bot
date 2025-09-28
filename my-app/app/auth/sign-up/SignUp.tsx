@@ -12,10 +12,8 @@ export default function SignUp() {
         if (!(e.currentTarget instanceof HTMLFormElement)) return;
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        console.log(formData);
         const email = formData.get("email");
         const password = formData.get("password");
-        console.log(process.env);
         const supabase = createClient(
             process.env.NEXT_PUBLIC_SUPABASE_URL!,
             process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
